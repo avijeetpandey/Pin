@@ -8,8 +8,7 @@ This is a travelers app made using react native and typescript, the app consists
 - filtering destinations based on choices
 
 ### Screenshot
-
-Attaching screenshot of the application
+Attaching screenshot of the application <br />
 <img src="./assets/screenshot.png" height="750px" width="300px" />
 
 ## How to run the application
