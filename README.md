@@ -10,7 +10,7 @@ This is a travelers app made using react native and typescript, the app consists
 ### Screenshot
 
 Attaching screenshot of the application
-<img src="./assets/screenshot.png" height="450px" width="400px" />
+<img src="./assets/screenshot.png" height="750px" width="300px" />
 
 ## How to run the application
 
