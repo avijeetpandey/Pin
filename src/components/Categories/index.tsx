@@ -15,11 +15,11 @@ function Categories({
       keyExtractor={(item) => String(item)}
       showsHorizontalScrollIndicator={false}
       renderItem={({ item, index }) => {
-        const selected = selectedCategory === item.name;
+        const selected = selectedCategory === item;
 
         return (
           <TouchableOpacity
-            onPress={() => onCategoryPress(item.name)}
+            onPress={() => onCategoryPress(item)}
             style={[
               styles.itemContainer,
               selected ? styles.selectedItemContainer : {},
@@ -27,7 +27,7 @@ function Categories({
             ]}
           >
             <Text style={[styles.item, selected ? styles.selectedItem : {}]}>
-              {item.name}
+              {item}
             </Text>
           </TouchableOpacity>
         );
