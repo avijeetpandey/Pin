@@ -1,19 +1,73 @@
-import { View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { FlatList, SafeAreaView, Text, View } from "react-native";
+import AttractionCard from "../../components/AttractionCard";
+import Categories from "../../components/Categories";
 import Title from "../../components/Title";
 import styles from "./style";
-import { memo } from "react";
+import jsonData from "../../data/attractions.json";
+import categories from "../../data/categories.json";
 import { Heading } from "../../components/Heading";
-import { CONSTANTS } from "../../utils/constants";
 
-function Home() {
+const ALL = "All";
+
+const Home = () => {
+  const [selectedCategory, setSelectedCategory] = useState(ALL);
+  const [data, setData] = useState<any>([]);
+
+  useEffect(() => {
+    setData(jsonData);
+  }, []);
+
+  useEffect(() => {
+    if (selectedCategory === ALL) {
+      setData(jsonData);
+    } else {
+      const filteredData = jsonData?.filter((item) =>
+        item?.categories?.includes(selectedCategory)
+      );
+
+      setData(filteredData);
+    }
+  }, [selectedCategory]);
+
   return (
-    <View style={styles.container}>
-      <Title text={CONSTANTS.mainTitle.subtitle} isSubtitle />
-      <Title text={CONSTANTS.mainTitle.title} />
+    <FlatList
+      data={data}
+      numColumns={2}
+      style={{ flexGrow: 1 }}
+      ListEmptyComponent={<Text style={styles.emptyText}>No items found.</Text>}
+      ListHeaderComponent={
+        <>
+          <View style={{ margin: 32 }}>
+            <Title text="Where do" isSubtitle={true} />
+            <Title text="you want to go" />
 
-      <Heading text={CONSTANTS.heading} />
-    </View>
+            <Heading text="Explore Attractions" />
+          </View>
+
+          <Categories
+            selectedCategory={selectedCategory}
+            onCategoryPress={setSelectedCategory}
+            categories={[ALL, ...categories]}
+          />
+        </>
+      }
+      keyExtractor={(item: any) => String(item?.id)}
+      renderItem={({ item, index }: any) => (
+        <AttractionCard
+          key={item.id}
+          style={
+            index % 2 === 0
+              ? { marginRight: 12, marginLeft: 32 }
+              : { marginRight: 32 }
+          }
+          title={item.name}
+          subtitle={item.city}
+          imageSrc={item.images?.length ? item.images[0] : null}
+        />
+      )}
+    />
   );
-}
+};
 
-export default memo(Home);
+export default React.memo(Home);
